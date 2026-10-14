@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import {
   logTicks,
+  scaleTicks,
   niceCeil,
   niceFloor,
   positionToValue,
@@ -122,6 +123,36 @@ describe('stepValue', () => {
       const next = stepValue(v, small, 1)
       expect(next).toBeGreaterThan(v)
       v = next
+    }
+  })
+})
+
+describe('scaleTicks', () => {
+  it('linear: gleichmäßig, Hauptmarken auf schönen Zahlen', () => {
+    const ticks = scaleTicks(linear)
+    const majors = ticks.filter((t) => t.major).map((t) => t.value)
+    expect(majors).toEqual([2000, 4000, 6000, 8000, 10000])
+    const gaps = ticks.slice(1).map((t, i) => t.position - (ticks[i] as typeof t).position)
+    for (const g of gaps) expect(g).toBeCloseTo(gaps[0] as number, 10)
+  })
+
+  it('log: Zehnerpotenzen sind Hauptmarken, dazwischen 2–9', () => {
+    const ticks = scaleTicks({ min: 10, max: 1000, type: 'log' })
+    expect(ticks.filter((t) => t.major).map((t) => t.value)).toEqual([10, 100, 1000])
+    expect(ticks).toHaveLength(19)
+  })
+
+  it('log mit vielen Zehnerpotenzen: nur 1, 2, 5', () => {
+    const ticks = scaleTicks({ min: 1, max: 1e8, type: 'log' })
+    expect(ticks.map((t) => t.value).slice(0, 4)).toEqual([1, 2, 5, 10])
+  })
+
+  it('alle Positionen liegen zwischen 0 und 1', () => {
+    for (const s of [linear, log, { min: 0.05, max: 7, type: 'linear' as const }]) {
+      for (const t of scaleTicks(s)) {
+        expect(t.position).toBeGreaterThanOrEqual(0)
+        expect(t.position).toBeLessThanOrEqual(1)
+      }
     }
   })
 })
