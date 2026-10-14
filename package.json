@@ -10,7 +10,8 @@
     "lint": "oxlint",
     "typecheck": "tsc -b",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "validate-questions": "tsx scripts/validate-questions.ts"
   },
   "dependencies": {
     "framer-motion": "^14.2.0",
