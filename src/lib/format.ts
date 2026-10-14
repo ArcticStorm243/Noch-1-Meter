@@ -27,14 +27,38 @@ export function formatNumber(value: number): string {
 function compact(value: number, short = false): string {
   const f = short ? shortFormat : numberFormat
   const abs = Math.abs(value)
+  if (abs >= 1e15) return `${f.format(value / 1e15)}${NBSP}Brd.`
+  if (abs >= 1e12) return `${f.format(value / 1e12)}${NBSP}Bio.`
   if (abs >= 1e9) return `${f.format(value / 1e9)}${NBSP}Mrd.`
   if (abs >= 1e6) return `${f.format(value / 1e6)}${NBSP}Mio.`
   return f.format(value)
 }
 
 export function formatCurrency(value: number): string {
-  if (value < 100 && !Number.isInteger(value)) return `${centsFormat.format(value)}${NBSP}€`
+  // Krumme Beträge immer mit Cent: 0,95 € / 103,80 € (aber 866 Mio. €)
+  if (value < 1e6 && !Number.isInteger(value)) return `${centsFormat.format(value)}${NBSP}€`
   return `${compact(value)}${NBSP}€`
+}
+
+/** Einheiten, die schon eine Größenordnung enthalten („Mio. km“). */
+const MAGNITUDES = ['Mio.', 'Mrd.', 'Bio.', 'Brd.'] as const
+
+/**
+ * Zahl + Einheit. Steckt die Größenordnung schon in der Einheit („Mio. km“),
+ * wird sie hochgestuft statt „85.900 Mio. km“ → „85,9 Mrd. km“.
+ */
+function withUnit(value: number, unit: string, short: boolean): string {
+  const f = short ? shortFormat : numberFormat
+  let index = MAGNITUDES.findIndex((m) => unit.startsWith(`${m} `))
+  if (index === -1) return `${compact(value, short)}${NBSP}${unit}`
+  let rest = unit.slice(MAGNITUDES[index]!.length + 1)
+  let v = value
+  while (Math.abs(v) >= 1000 && index < MAGNITUDES.length - 1) {
+    v /= 1000
+    index++
+  }
+  rest = `${MAGNITUDES[index]} ${rest}`.replace(' ', NBSP)
+  return `${f.format(v)}${NBSP}${rest}`
 }
 
 /** Sekunden lesbar machen: „9,58 s“, „8 min 19 s“, „2 h 5 min“, „687 Tage“, „2,74 Jahre“. */
@@ -78,7 +102,7 @@ export function formatDuration(seconds: number): string {
   }
 
   const years = seconds / YEAR
-  return `${shortFormat.format(years)}${NBSP}Jahre`
+  return `${compact(years, true)}${NBSP}Jahre`
 }
 
 /** Vollständige Anzeige (großer Wert, Reveal). */
@@ -86,16 +110,15 @@ export function formatValue(value: number, q: Formattable): string {
   const format: ValueFormat = q.format ?? 'number'
   if (format === 'currency') return formatCurrency(value)
   if (format === 'duration') return formatDuration(value)
-  return `${compact(value)}${NBSP}${q.unit}`
+  return withUnit(value, q.unit, false)
 }
 
 /** Kurze Anzeige für Achsen-Beschriftungen. */
 export function formatAxisValue(value: number, q: Formattable): string {
   const format: ValueFormat = q.format ?? 'number'
   if (format === 'duration') return formatDuration(value)
-  const num = compact(value, true)
-  if (format === 'currency') return `${num}${NBSP}€`
-  return `${num}${NBSP}${q.unit}`
+  if (format === 'currency') return `${compact(value, true)}${NBSP}€`
+  return withUnit(value, q.unit, true)
 }
 
 /** Prozent mit einer Nachkommastelle: 7,3 % */

@@ -50,4 +50,4 @@ Pull Requests werden automatisch geprüft (Lint, Fragen, Tests, Build).
 2. Frage nach dem Typ `Question` (`src/types/question.ts`) ergänzen – mit Quelle.
 3. `npm run validate-questions` ausführen.
 
-Regeln: Zeitwerte in Sekunden (`format: 'duration'`), Preise in Euro (`format: 'currency'`) mit `referenceYear`. Standard für den Bereich ist `{ mode: 'auto', span: … }`.
+Regeln: Zeitwerte in Sekunden (`format: 'duration'`), Zählbares mit `integer: true` (nur ganze Zahlen als Schätzung), Preise in Euro (`format: 'currency'`) mit `referenceYear`. Standard für den Bereich ist `{ mode: 'auto', span: … }`.

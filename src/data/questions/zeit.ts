@@ -41,10 +41,10 @@ export const ZEIT: Question[] = [
     category: 'zeit',
     tags: ['weltall'],
     question: 'Wie lange dauert ein Jahr auf dem Mars (in Erdtagen)?',
-    correctValue: 687 * DAY,
-    unit: '',
-    format: 'duration',
+    correctValue: 687,
+    unit: 'Tage',
     range: { mode: 'auto', span: 20 },
+    integer: true,
     difficulty: 3,
     explanation:
       '687 Erdtage – fast doppelt so lang wie bei uns. Ein Geburtstag auf dem Mars kommt also nur etwa alle zwei Jahre.',

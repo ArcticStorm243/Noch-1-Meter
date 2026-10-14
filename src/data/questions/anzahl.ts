@@ -9,6 +9,7 @@ export const ANZAHL: Question[] = [
     correctValue: 206,
     unit: 'Knochen',
     range: { mode: 'auto', span: 10 },
+    integer: true,
     difficulty: 1,
     explanation:
       'Meist 206. Babys haben noch rund 300 – viele davon wachsen später zusammen.',
@@ -35,6 +36,7 @@ export const ANZAHL: Question[] = [
     correctValue: 100000,
     unit: 'Haare',
     range: { mode: 'auto', span: 1000 },
+    integer: true,
     difficulty: 3,
     explanation:
       'Rund 100.000. Blonde Menschen haben meist mehr, rothaarige weniger. Täglich fallen 50 bis 100 davon aus.',
@@ -48,6 +50,7 @@ export const ANZAHL: Question[] = [
     correctValue: 100000,
     unit: 'Schläge',
     range: { mode: 'auto', span: 1000 },
+    integer: true,
     difficulty: 3,
     explanation:
       'Rund 100.000-mal (bei etwa 70 Schlägen pro Minute). In einem ganzen Leben sind das fast 3 Milliarden.',
@@ -61,6 +64,7 @@ export const ANZAHL: Question[] = [
     correctValue: 20000,
     unit: 'Atemzüge',
     range: { mode: 'auto', span: 1000 },
+    integer: true,
     difficulty: 3,
     explanation:
       'Ungefähr 20.000 (bei 12 bis 20 Atemzügen pro Minute). Im Schlaf atmest du langsamer.',
@@ -74,6 +78,7 @@ export const ANZAHL: Question[] = [
     correctValue: 13200,
     unit: 'km',
     range: { mode: 'auto', span: 100 },
+    integer: true,
     difficulty: 4,
     explanation:
       'Rund 13.200 km – fast ein Drittel des Erdumfangs. Eines der dichtesten Autobahnnetze der Welt.',
@@ -101,6 +106,7 @@ export const ANZAHL: Question[] = [
     correctValue: 109,
     unit: 'Erden',
     range: { mode: 'auto', span: 100 },
+    integer: true,
     difficulty: 4,
     explanation:
       'Rund 109. Vom Volumen her passen sogar über eine Million Erden in die Sonne.',
@@ -114,6 +120,7 @@ export const ANZAHL: Question[] = [
     correctValue: 32,
     unit: 'Zähne',
     range: { mode: 'auto', span: 10 },
+    integer: true,
     difficulty: 1,
     explanation: '32. Ein Milchgebiss hat nur 20 Zähne.',
     source: 'Wikipedia: Gebiss des Menschen',
@@ -126,6 +133,7 @@ export const ANZAHL: Question[] = [
     correctValue: 193,
     unit: 'Staaten',
     range: { mode: 'auto', span: 10 },
+    integer: true,
     difficulty: 1,
     explanation: '193. Das jüngste Mitglied ist der Südsudan, aufgenommen 2011.',
     source: 'Vereinte Nationen',
@@ -139,6 +147,7 @@ export const ANZAHL: Question[] = [
     correctValue: 88,
     unit: 'Tasten',
     range: { mode: 'auto', span: 10 },
+    integer: true,
     difficulty: 2,
     explanation: '88 – davon 52 weiße und 36 schwarze.',
     source: 'Wikipedia: Klavier',
@@ -151,6 +160,7 @@ export const ANZAHL: Question[] = [
     correctValue: 2_000_000,
     unit: 'Menschen',
     range: { mode: 'auto', span: 100 },
+    integer: true,
     difficulty: 3,
     explanation:
       'Gut 2 Millionen – nach Berlin die zweitgrößte Stadt im deutschsprachigen Raum. Um 1910 hatte Wien sogar schon über 2 Millionen.',
@@ -179,6 +189,7 @@ export const ANZAHL: Question[] = [
     correctValue: 500,
     unit: 'kcal',
     range: { mode: 'auto', span: 20 },
+    integer: true,
     difficulty: 2,
     explanation:
       'Rund 500 kcal. Um das abzutrainieren, müsstest du fast zwei Stunden zügig spazieren gehen.',
@@ -190,7 +201,7 @@ export const ANZAHL: Question[] = [
     tags: ['koerper', 'mensch'],
     question: 'Wie viele Nervenzellen hat das menschliche Gehirn?',
     correctValue: 86,
-    unit: 'Mrd.',
+    unit: 'Mrd. Nervenzellen',
     range: { mode: 'auto', span: 10000 },
     difficulty: 4,
     explanation:
@@ -203,11 +214,25 @@ export const ANZAHL: Question[] = [
     tags: ['koerper', 'mensch'],
     question: 'Aus wie vielen Zellen besteht ein erwachsener Mensch?',
     correctValue: 30,
-    unit: 'Billionen',
-    range: { mode: 'auto', span: 10000 },
+    unit: 'Bio. Zellen',
+    range: { mode: 'auto', span: 1000 },
     difficulty: 5,
     explanation:
       'Rund 30 Billionen – die meisten davon rote Blutkörperchen. Dazu kommen noch etwa genauso viele Bakterien.',
     source: 'Sender, Fuchs & Milo, PLOS Biology (2016)',
+  },
+  {
+    id: 'wolke-wasser',
+    category: 'anzahl',
+    tags: ['erde', 'alltag'],
+    question: 'Wie viele Liter Wasser stecken ungefähr in einer durchschnittlichen Schönwetterwolke?',
+    correctValue: 500_000,
+    unit: 'Liter',
+    range: { mode: 'auto', span: 10000 },
+    integer: true,
+    difficulty: 5,
+    explanation:
+      'Rund 500.000 Liter – genug für etwa 3.000 volle Badewannen. Die Tröpfchen sind nur über einen riesigen Raum verteilt, deshalb schwebt die Wolke.',
+    source: 'USGS Water Science School: How much does a cloud weigh?',
   },
 ]

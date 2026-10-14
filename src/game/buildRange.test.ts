@@ -73,3 +73,19 @@ describe('buildRange – auto', () => {
     expect(buildRange(q, createRng(99))).toEqual(buildRange(q, createRng(99)))
   })
 })
+
+describe('buildRange – ganze Zahlen', () => {
+  it('ganzzahlige Grenzen ab 1, Antwort liegt im Bereich', () => {
+    for (const correctValue of [3, 32, 88, 193]) {
+      const q = makeQuestion({ correctValue, integer: true, range: { mode: 'auto', span: 10 } })
+      for (let seed = 0; seed < 300; seed++) {
+        const s = buildRange(q, createRng(seed))
+        expect(s.integer).toBe(true)
+        expect(Number.isInteger(s.min) && Number.isInteger(s.max)).toBe(true)
+        expect(s.min).toBeGreaterThanOrEqual(1)
+        expect(correctValue).toBeGreaterThanOrEqual(s.min)
+        expect(correctValue).toBeLessThanOrEqual(s.max)
+      }
+    }
+  })
+})

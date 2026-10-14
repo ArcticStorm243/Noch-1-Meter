@@ -21,6 +21,18 @@ const MAX_ATTEMPTS = 20
  *        zwischen 10 % und 90 % der Skala, damit die Skala nichts verrät.
  */
 export function buildRange(question: Question, rng: Rng): Scale {
+  const scale = buildRawRange(question, rng)
+  return question.integer ? toIntegerScale(scale) : scale
+}
+
+/** Ganzzahlige Skala: Grenzen auf ganze Zahlen, mindestens 1. */
+function toIntegerScale(scale: Scale): Scale {
+  const min = Math.max(1, Math.ceil(scale.min))
+  const max = Math.max(min + 1, Math.floor(scale.max))
+  return { ...scale, min, max, integer: true }
+}
+
+function buildRawRange(question: Question, rng: Rng): Scale {
   const { range, correctValue, scaleType } = question
 
   if (range.mode === 'fixed') {

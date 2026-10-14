@@ -54,19 +54,6 @@ export const GEWICHT: Question[] = [
     source: 'Wikipedia: Eiffelturm',
   },
   {
-    id: 'wolke-gewicht',
-    category: 'gewicht',
-    tags: ['erde', 'alltag'],
-    question: 'Wie viel Wasser steckt ungefähr in einer durchschnittlichen Schönwetterwolke?',
-    correctValue: 500,
-    unit: 't',
-    range: { mode: 'auto', span: 10000 },
-    difficulty: 5,
-    explanation:
-      'Rund 500 Tonnen – so viel wie etwa 100 Elefanten. Die Tröpfchen sind nur über einen riesigen Raum verteilt.',
-    source: 'USGS Water Science School: How much does a cloud weigh?',
-  },
-  {
     id: 'bienenelfe-gewicht',
     category: 'gewicht',
     tags: ['tiere'],
