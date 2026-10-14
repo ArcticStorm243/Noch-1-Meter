@@ -31,5 +31,23 @@ npm run dev
 | --- | --- |
 | `npm run build` | Typecheck + Produktions-Build |
 | `npm run test` | Logik-Tests (Vitest) |
+| `npm run validate-questions` | Prüft alle Fragen (Regeln, Quellen, Verteilung) |
 | `npm run lint` | Lint (oxlint) |
 | `npm run preview` | Build lokal ansehen |
+
+## Hosting (GitHub Pages)
+
+Jeder Push auf `main` baut das Spiel und veröffentlicht es automatisch:
+**https://arcticstorm243.github.io/Noch-1-Meter/**
+
+Einmalig nötig: *Settings → Pages → Build and deployment → Source:* **GitHub Actions**.
+
+Pull Requests werden automatisch geprüft (Lint, Fragen, Tests, Build).
+
+## Neue Fragen hinzufügen
+
+1. Passende Datei in `src/data/questions/` öffnen (eine Datei pro Kategorie).
+2. Frage nach dem Typ `Question` (`src/types/question.ts`) ergänzen – mit Quelle.
+3. `npm run validate-questions` ausführen.
+
+Regeln: Zeitwerte in Sekunden (`format: 'duration'`), Preise in Euro (`format: 'currency'`) mit `referenceYear`. Standard für den Bereich ist `{ mode: 'auto', span: … }`.

@@ -1,20 +1,25 @@
 @import 'tailwindcss';
+@import '@fontsource-variable/bricolage-grotesque';
 
-/* Design-Tokens. Dunkles Design ist Standard (wirkt auf Streams besser). */
+/*
+ * Design-Tokens.
+ * Idee: Tinte + Maßband. Tiefes Tintenblau als Grund (wirkt auf Streams ruhig),
+ * das gelbe Maßband ist das einzige laute Element.
+ */
 @theme {
-  --color-bg: #0b0b10;
-  --color-surface: #15151d;
-  --color-surface-2: #1e1e29;
-  --color-border: #2a2a38;
-  --color-text: #f4f4f7;
-  --color-muted: #9a9aad;
-  --color-accent: #ffd23f;
-  --color-good: #3ddc84;
-  --color-ok: #ffb627;
-  --color-bad: #ff5a5f;
+  --color-ink: #10132e;
+  --color-surface: #191d42;
+  --color-surface-2: #232858;
+  --color-border: #2f3568;
+  --color-text: #f3f1ea;
+  --color-muted: #9aa0c8;
+  --color-tape: #ffc93c;
+  --color-tape-ink: #2a2306;
+  --color-good: #5ee3a1;
+  --color-ok: #ffb347;
+  --color-bad: #ff6f61;
 
-  --font-sans:
-    'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Bricolage Grotesque Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
 html,
@@ -25,9 +30,10 @@ body,
 
 body {
   margin: 0;
-  background: var(--color-bg);
+  background: var(--color-ink);
   color: var(--color-text);
   font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
   overflow-x: hidden;
@@ -37,6 +43,11 @@ body {
   min-height: 100dvh;
   padding: env(safe-area-inset-top) env(safe-area-inset-right)
     env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-tape);
+  outline-offset: 3px;
 }
 
 @media (prefers-reduced-motion: reduce) {
