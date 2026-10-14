@@ -1,29 +1,42 @@
-/** Kleines Maßband-Stück als Logo-Element: genau 1 Meter, in 10-cm-Schritten. */
+/** Logo-Element: genau 1 Meter Maßband mit Bemaßung wie auf einer technischen Zeichnung. */
 export function TapeLogo() {
-  const ticks = Array.from({ length: 51 }, (_, i) => i)
+  const ticks = Array.from({ length: 101 }, (_, i) => i)
   return (
-    <div
-      className="relative mx-auto h-12 w-full max-w-md rounded-lg bg-tape shadow-[0_12px_30px_-14px_rgba(255,201,60,0.7)] sm:h-14"
-      aria-hidden
-    >
-      {ticks.map((i) => {
-        const major = i % 5 === 0
-        return (
+    <div className="mx-auto w-full max-w-lg" aria-hidden>
+      {/* Bemaßungslinie */}
+      <div className="readout relative mb-2 flex items-center text-xs text-muted">
+        <span className="h-3 w-px bg-muted" />
+        <span className="h-px flex-1 bg-muted/60" />
+        <span className="px-2">1000 mm</span>
+        <span className="h-px flex-1 bg-muted/60" />
+        <span className="h-3 w-px bg-muted" />
+      </div>
+
+      {/* Maßband */}
+      <div className="relative h-12 overflow-hidden rounded-[3px] bg-tape shadow-[0_14px_36px_-18px_rgba(255,201,60,0.8)] sm:h-14">
+        {ticks.map((i) => {
+          const major = i % 10 === 0
+          const half = i % 5 === 0
+          return (
+            <span
+              key={i}
+              className={`absolute top-0 -translate-x-1/2 bg-tape-ink ${
+                major ? 'h-5 w-[2px]' : half ? 'h-3.5 w-px' : 'h-2 w-px opacity-60'
+              }`}
+              style={{ left: `${(i / 100) * 100}%` }}
+            />
+          )
+        })}
+        {[10, 20, 30, 40, 50, 60, 70, 80, 90].map((cm) => (
           <span
-            key={i}
-            className={`absolute top-0 -translate-x-1/2 bg-tape-ink ${
-              major ? 'h-5 w-[2px] opacity-90' : 'h-2.5 w-px opacity-50'
-            }`}
-            style={{ left: `${4 + (i / 50) * 92}%` }}
-          />
-        )
-      })}
-      <span className="absolute bottom-1 left-[4%] -translate-x-1/2 text-[11px] font-bold text-tape-ink">
-        0
-      </span>
-      <span className="absolute right-[4%] bottom-1 translate-x-1/2 text-[11px] font-bold text-tape-ink">
-        1 m
-      </span>
+            key={cm}
+            className="readout absolute bottom-1 -translate-x-1/2 text-[10px] font-semibold text-tape-ink sm:text-[11px]"
+            style={{ left: `${cm}%` }}
+          >
+            {cm}
+          </span>
+        ))}
+      </div>
     </div>
   )
 }

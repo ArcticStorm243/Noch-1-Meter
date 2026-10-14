@@ -147,16 +147,16 @@ export function TapeScale({
         onPointerUp={endDrag}
         onPointerCancel={endDrag}
         onKeyDown={onKeyDown}
-        className={`relative touch-none rounded-2xl pt-10 pb-14 outline-offset-4 ${
+        className={`relative touch-none rounded-lg pt-10 pb-14 outline-offset-4 ${
           disabled ? 'cursor-default' : dragging ? 'cursor-grabbing' : 'cursor-pointer'
         }`}
       >
         {/* Das Maßband */}
         <div
           ref={tapeRef}
-          className="relative h-16 rounded-xl bg-tape shadow-[0_10px_30px_-12px_rgba(255,201,60,0.55)] sm:h-20"
+          className="relative h-16 rounded-[3px] bg-tape shadow-[0_0_0_1px_rgba(255,201,60,0.35),0_14px_36px_-16px_rgba(255,201,60,0.6)] sm:h-20"
         >
-          <div className="absolute inset-x-0 top-0 h-full overflow-hidden rounded-xl" aria-hidden>
+          <div className="absolute inset-x-0 top-0 h-full overflow-hidden rounded-[3px]" aria-hidden>
             {ticks.map((t) => (
               <span
                 key={t.value}
@@ -170,7 +170,7 @@ export function TapeScale({
 
           {/* Zahlen auf dem Band, wie bei einem echten Maßband */}
           <div
-            className="pointer-events-none absolute inset-x-0 bottom-1.5 h-4 text-[11px] font-semibold leading-4 text-tape-ink sm:bottom-2 sm:text-sm"
+            className="readout pointer-events-none absolute inset-x-0 bottom-1.5 h-4 text-[11px] font-semibold leading-4 text-tape-ink sm:bottom-2 sm:text-[13px]"
             aria-hidden
           >
             <span className="absolute left-2">{formatAxis(scale.min)}</span>
@@ -212,10 +212,10 @@ export function TapeScale({
               transition={{ duration: 0.35, ease: 'easeOut' }}
               aria-hidden
             >
-              <span className="mb-1 whitespace-nowrap rounded-full bg-good px-2 py-0.5 text-xs font-bold text-ink">
+              <span className="readout mb-1 whitespace-nowrap rounded-[3px] bg-good px-2 py-0.5 text-xs font-semibold text-ink">
                 {answerLabel}
               </span>
-              <span className="w-[3px] flex-1 rounded-full bg-good" />
+              <span className="w-[2px] flex-1 bg-good" />
             </motion.div>
           )}
 
@@ -229,9 +229,9 @@ export function TapeScale({
               aria-hidden
             >
               <div className="relative flex h-full flex-col items-center">
-                <span className="w-[3px] flex-1 rounded-full bg-ink" />
+                <span className="w-[2px] flex-1 bg-ink" />
                 <motion.span
-                  className={`absolute top-full mt-2 size-11 rounded-full border-4 border-ink bg-text shadow-lg ${
+                  className={`absolute top-full mt-2 grid h-11 w-9 place-items-center rounded-md border border-text/70 bg-surface-2 shadow-lg after:h-4 after:w-2.5 after:border-x after:border-muted after:content-[''] ${
                     disabled ? 'opacity-70' : ''
                   }`}
                   animate={{ scale: dragging ? 1.12 : 1 }}
@@ -243,7 +243,7 @@ export function TapeScale({
         </div>
 
         {valuePos === null && !disabled && (
-          <p className="pointer-events-none absolute inset-x-0 bottom-3 text-center text-sm text-muted sm:text-base">
+          <p className="readout pointer-events-none absolute inset-x-0 bottom-3 text-center text-xs text-muted sm:text-sm">
             Tippe oder ziehe auf dem Maßband
           </p>
         )}

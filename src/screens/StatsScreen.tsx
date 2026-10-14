@@ -47,11 +47,11 @@ export function StatsScreen({ profile, onBack, onReset }: Props) {
           type="button"
           onClick={onBack}
           aria-label="Zurück"
-          className="grid size-12 place-items-center rounded-full border border-border bg-surface hover:bg-surface-2"
+          className="grid size-12 place-items-center rounded-md border border-border bg-surface hover:border-muted"
         >
           <ArrowLeft className="size-5" aria-hidden />
         </button>
-        <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">Deine Statistik</h1>
+        <h1 className="text-3xl font-semibold tracking-[-0.02em] sm:text-4xl">Deine Statistik</h1>
       </header>
 
       {empty ? (
@@ -67,9 +67,9 @@ export function StatsScreen({ profile, onBack, onReset }: Props) {
         <>
           <section className="grid grid-cols-2 gap-3 sm:grid-cols-3">
             {numbers.map((n) => (
-              <div key={n.label} className="rounded-2xl bg-surface p-4 sm:p-5">
-                <p className="text-sm text-muted">{n.label}</p>
-                <p className="mt-1 text-2xl font-extrabold sm:text-3xl">{n.value}</p>
+              <div key={n.label} className="rounded-lg border border-border bg-surface/80 p-4 backdrop-blur-sm sm:p-5">
+                <p className="readout text-xs text-muted">{n.label}</p>
+                <p className="readout mt-1.5 text-2xl font-semibold sm:text-3xl">{n.value}</p>
               </div>
             ))}
           </section>
@@ -84,15 +84,15 @@ export function StatsScreen({ profile, onBack, onReset }: Props) {
                   <li key={c.id} className="space-y-1.5">
                     <div className="flex items-baseline justify-between gap-3">
                       <p className="font-bold">{CATEGORY_LABELS[c.id]}</p>
-                      <p className="text-sm text-muted">
+                      <p className="readout text-xs text-muted sm:text-sm">
                         Ø {averageDeviationText(c.average)} daneben
                         {showTendency && (c.tendency > 1 ? ', meist zu hoch' : ', meist zu tief')}
                       </p>
                     </div>
-                    <div className="h-3 overflow-hidden rounded-full bg-surface-2">
-                      <div className="h-full rounded-full bg-tape" style={{ width: barWidth(c.average) }} />
+                    <div className="h-2 overflow-hidden bg-border">
+                      <div className="h-full bg-tape" style={{ width: barWidth(c.average) }} />
                     </div>
-                    <p className="text-xs text-muted">{c.stats.count} {c.stats.count === 1 ? "Frage" : "Fragen"}</p>
+                    <p className="readout text-xs text-muted">{c.stats.count} {c.stats.count === 1 ? "Frage" : "Fragen"}</p>
                   </li>
                 )
               })}
