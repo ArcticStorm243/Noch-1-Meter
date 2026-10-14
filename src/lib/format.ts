@@ -53,6 +53,14 @@ export function formatDuration(seconds: number): string {
   }
 
   if (seconds < DAY) {
+    // Unter 3 Stunden mit Sekunden-Rest: wie eine Stoppuhr („2:00:35 h“), z. B. Marathon-Zeiten
+    const whole = Math.round(seconds)
+    if (seconds < 3 * HOUR && whole % MINUTE !== 0) {
+      const hh = Math.floor(whole / HOUR)
+      const mm = Math.floor((whole % HOUR) / MINUTE)
+      const ss = whole % MINUTE
+      return `${hh}:${String(mm).padStart(2, '0')}:${String(ss).padStart(2, '0')}${NBSP}h`
+    }
     let h = Math.floor(seconds / HOUR)
     let min = Math.round((seconds - h * HOUR) / MINUTE)
     if (min === 60) {
