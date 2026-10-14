@@ -201,7 +201,7 @@ export const ANZAHL: Question[] = [
     tags: ['koerper', 'mensch'],
     question: 'Wie viele Nervenzellen hat das menschliche Gehirn?',
     correctValue: 86,
-    unit: 'Mrd.',
+    unit: 'Mrd. Nervenzellen',
     range: { mode: 'auto', span: 10000 },
     difficulty: 4,
     explanation:
@@ -214,11 +214,25 @@ export const ANZAHL: Question[] = [
     tags: ['koerper', 'mensch'],
     question: 'Aus wie vielen Zellen besteht ein erwachsener Mensch?',
     correctValue: 30,
-    unit: 'Billionen',
-    range: { mode: 'auto', span: 10000 },
+    unit: 'Bio. Zellen',
+    range: { mode: 'auto', span: 1000 },
     difficulty: 5,
     explanation:
       'Rund 30 Billionen – die meisten davon rote Blutkörperchen. Dazu kommen noch etwa genauso viele Bakterien.',
     source: 'Sender, Fuchs & Milo, PLOS Biology (2016)',
+  },
+  {
+    id: 'wolke-wasser',
+    category: 'anzahl',
+    tags: ['erde', 'alltag'],
+    question: 'Wie viele Liter Wasser stecken ungefähr in einer durchschnittlichen Schönwetterwolke?',
+    correctValue: 500_000,
+    unit: 'Liter',
+    range: { mode: 'auto', span: 10000 },
+    integer: true,
+    difficulty: 5,
+    explanation:
+      'Rund 500.000 Liter – genug für etwa 3.000 volle Badewannen. Die Tröpfchen sind nur über einen riesigen Raum verteilt, deshalb schwebt die Wolke.',
+    source: 'USGS Water Science School: How much does a cloud weigh?',
   },
 ]

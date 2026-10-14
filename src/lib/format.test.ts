@@ -31,6 +31,8 @@ describe('formatValue – Euro', () => {
   it.each([
     [0.95, '0,95 €'],
     [4.5, '4,50 €'],
+    [103.8, '103,80 €'],
+    [428_000_000_000_000, '428 Bio. €'],
     [45000, '45.000 €'],
     [866_000_000, '866 Mio. €'],
   ])('%d → %s', (value, expected) => {
@@ -53,6 +55,7 @@ describe('formatDuration', () => {
     [86400, '1 Tag'],
     [1.5 * 86400, '1,5 Tage'],
     [5000 * 86400, '13,7 Jahre'],
+    [26_000_000 * 365.25 * 86400, '26 Mio. Jahre'],
   ])('%d s → %s', (value, expected) => {
     expect(s(formatDuration(value))).toBe(expected)
   })
@@ -83,5 +86,14 @@ describe('Prozent, Faktor, Punkte', () => {
 
   it('Punkte', () => {
     expect(formatPoints(6850)).toBe('6.850')
+  })
+})
+
+describe('Einheiten mit Größenordnung', () => {
+  it('stuft hoch statt „85.900 Mio. km“', () => {
+    expect(s(formatValue(85_900, { unit: 'Mio. km' }))).toBe('85,9 Mrd. km')
+    expect(s(formatValue(149.6, { unit: 'Mio. km' }))).toBe('149,6 Mio. km')
+    expect(s(formatValue(408_000, { unit: 'Mrd. Nervenzellen' }))).toBe('408 Bio. Nervenzellen')
+    expect(s(formatAxisValue(50_000, { unit: 'Mio. km' }))).toBe('50 Mrd. km')
   })
 })

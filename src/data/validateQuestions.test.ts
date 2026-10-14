@@ -88,3 +88,15 @@ describe('validateQuestions – ganze Zahlen', () => {
     expect(errors.join('\n')).toContain('ganze Zahl')
   })
 })
+
+describe('validateQuestions – Zählfragen', () => {
+  it('„Wie viele …?“ ohne integer ist ein Fehler', () => {
+    const q = makeQuestion({ question: 'Wie viele Zähne hat ein Hai?', unit: 'Zähne', correctValue: 300 })
+    expect(validateQuestions([q]).errors.join('\n')).toContain('integer: true')
+  })
+
+  it('„Wie viele Liter …?“ darf Kommastellen haben', () => {
+    const q = makeQuestion({ question: 'Wie viele Liter Blut?', unit: 'Liter', correctValue: 5 })
+    expect(validateQuestions([q]).errors.join('\n')).not.toContain('integer: true')
+  })
+})

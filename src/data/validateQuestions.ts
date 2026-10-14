@@ -32,6 +32,9 @@ export type ValidationResult = {
 
 const ID_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/
 const POPULATION_PATTERN = /einwohner|bevölkerung|leben .* in /i
+const COUNT_QUESTION = /^(aus )?wie viele /i
+/** Einheiten, bei denen auch „Wie viele …?“ sinnvoll Kommastellen hat (2,5 Liter, 8,1 Mrd.). */
+const DECIMAL_UNIT = /liter|dm|mrd|mio|billionen|km|lichtjahre/i
 
 export function validateQuestions(questions: readonly Question[]): ValidationResult {
   const errors: string[] = []
@@ -94,6 +97,10 @@ export function validateQuestions(questions: readonly Question[]): ValidationRes
       err('integer: correctValue muss eine ganze Zahl sein')
     }
     if (q.integer && format !== 'number') err('integer geht nur mit format "number"')
+    // „Wie viele …?“ zählt Dinge → ganze Zahlen. Ausnahme: Einheiten, bei denen Kommastellen Sinn ergeben.
+    if (COUNT_QUESTION.test(q.question) && !q.integer && !DECIMAL_UNIT.test(q.unit)) {
+      err(`„Wie viele …?“ mit Einheit „${q.unit}“ braucht integer: true`)
+    }
   }
 
   // Statistik

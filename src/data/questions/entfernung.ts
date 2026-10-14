@@ -150,8 +150,8 @@ export const ENTFERNUNG: Question[] = [
     tags: ['weltall'],
     question: 'Wie viele Kilometer ist ein Lichtjahr lang?',
     correctValue: 9.46,
-    unit: 'Billionen km',
-    range: { mode: 'auto', span: 10000 },
+    unit: 'Bio. km',
+    range: { mode: 'auto', span: 1000 },
     difficulty: 5,
     explanation:
       'Rund 9,46 Billionen km. Ein Auto mit 100 km/h bräuchte dafür über 10 Millionen Jahre.',
