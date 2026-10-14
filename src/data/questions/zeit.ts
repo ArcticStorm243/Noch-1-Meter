@@ -1,7 +1,10 @@
 import type { Question } from '../../types/question'
 
 const MIN = 60
-const DAY = 24 * 60 * MIN
+const HOUR = 60 * MIN
+const DAY = 24 * HOUR
+/** Gleiche Jahreslänge wie in formatDuration (365,25 Tage). */
+const YEAR = 365.25 * DAY
 
 /** Alle Zeitwerte in Sekunden (format: "duration"). */
 export const ZEIT: Question[] = [
@@ -75,5 +78,159 @@ export const ZEIT: Question[] = [
     explanation:
       '9,58 Sekunden. Seine Spitzengeschwindigkeit lag dabei bei über 44 km/h.',
     source: 'Wikipedia: Usain Bolt',
+  },
+  {
+    id: 'marathon-weltrekord',
+    category: 'zeit',
+    tags: ['sport', 'mensch'],
+    question: 'Wie lange brauchte Kelvin Kiptum für den Marathon-Weltrekord (Chicago 2023)?',
+    correctValue: 2 * HOUR + 35,
+    unit: '',
+    format: 'duration',
+    range: { mode: 'auto', span: 10 },
+    difficulty: 2,
+    explanation:
+      '2 Stunden und 35 Sekunden – im Schnitt fast 21 km/h, über 42 Kilometer lang.',
+    source: 'World Athletics',
+  },
+  {
+    id: 'iss-umlauf',
+    category: 'zeit',
+    tags: ['weltall', 'technik'],
+    question: 'Wie lange braucht die ISS für eine Runde um die Erde?',
+    correctValue: 92 * MIN,
+    unit: '',
+    format: 'duration',
+    range: { mode: 'auto', span: 100 },
+    difficulty: 3,
+    explanation:
+      'Nur rund 92 Minuten. Die Crew erlebt deshalb etwa 16 Sonnenaufgänge pro Tag.',
+    source: 'NASA, ISS Facts and Figures',
+  },
+  {
+    id: 'elefant-schwangerschaft',
+    category: 'zeit',
+    tags: ['tiere'],
+    question: 'Wie lange ist eine Elefantenkuh trächtig?',
+    correctValue: 650 * DAY,
+    unit: '',
+    format: 'duration',
+    range: { mode: 'auto', span: 20 },
+    difficulty: 3,
+    explanation:
+      'Rund 22 Monate – die längste Tragzeit aller Landtiere. Das Baby wiegt bei der Geburt etwa 100 kg.',
+    source: 'Wikipedia: Elefanten',
+  },
+  {
+    id: 'koelner-dom-bauzeit',
+    category: 'zeit',
+    tags: ['bauwerke', 'geschichte', 'dach'],
+    question: 'Wie lange dauerte es vom Baubeginn bis zur Fertigstellung des Kölner Doms?',
+    correctValue: 632 * YEAR,
+    unit: '',
+    format: 'duration',
+    range: { mode: 'auto', span: 100 },
+    difficulty: 4,
+    explanation:
+      '632 Jahre (1248 bis 1880). Über 400 Jahre lang stand ein mittelalterlicher Baukran oben auf dem unfertigen Südturm.',
+    source: 'Wikipedia: Kölner Dom',
+  },
+  {
+    id: 'apollo-11-flug',
+    category: 'zeit',
+    tags: ['weltall', 'geschichte'],
+    question: 'Wie lange flog Apollo 11 vom Start bis in die Umlaufbahn des Mondes?',
+    correctValue: 76 * HOUR,
+    unit: '',
+    format: 'duration',
+    range: { mode: 'auto', span: 100 },
+    difficulty: 4,
+    explanation:
+      'Rund 76 Stunden, also gut 3 Tage. Für dieselbe Strecke braucht Licht etwa 1,3 Sekunden.',
+    source: 'NASA, Apollo 11 Mission Timeline',
+  },
+  {
+    id: 'rote-blutkoerperchen',
+    category: 'zeit',
+    tags: ['koerper', 'mensch'],
+    question: 'Wie lange lebt ein rotes Blutkörperchen?',
+    correctValue: 120 * DAY,
+    unit: '',
+    format: 'duration',
+    range: { mode: 'auto', span: 1000 },
+    difficulty: 4,
+    explanation:
+      'Rund 120 Tage. Dein Körper stellt deshalb jede Sekunde etwa 2 Millionen neue her.',
+    source: 'Wikipedia: Erythrozyt',
+  },
+  {
+    id: 'c14-halbwertszeit',
+    category: 'zeit',
+    tags: ['geschichte'],
+    question: 'Wie lange dauert es, bis die Hälfte des radioaktiven Kohlenstoffs C-14 zerfallen ist?',
+    correctValue: 5730 * YEAR,
+    unit: '',
+    format: 'duration',
+    range: { mode: 'auto', span: 10000 },
+    difficulty: 5,
+    explanation:
+      'Rund 5.730 Jahre. Genau damit bestimmt die Radiokarbon-Methode das Alter von Knochen, Holz und Mumien.',
+    source: 'Wikipedia: Radiokarbonmethode',
+  },
+  {
+    id: 'venus-tag',
+    category: 'zeit',
+    tags: ['weltall'],
+    question: 'Wie lange braucht die Venus, um sich einmal um sich selbst zu drehen?',
+    correctValue: 243 * DAY,
+    unit: '',
+    format: 'duration',
+    range: { mode: 'auto', span: 10000 },
+    difficulty: 5,
+    explanation:
+      '243 Erdtage – länger als ihr ganzes Jahr (225 Tage). Und sie dreht sich auch noch andersherum als die Erde.',
+    source: 'Wikipedia: Venus (Planet)',
+  },
+  {
+    id: 'licht-um-erde',
+    category: 'zeit',
+    tags: ['erde'],
+    question: 'Wie lange bräuchte Licht, um einmal um die Erde zu reisen?',
+    correctValue: 0.134,
+    unit: '',
+    format: 'duration',
+    range: { mode: 'auto', span: 1000 },
+    difficulty: 4,
+    explanation:
+      'Rund 0,13 Sekunden. In einer Sekunde schafft Licht die Strecke also siebeneinhalb Mal.',
+    source: 'Erdumfang 40.075 km ÷ Lichtgeschwindigkeit',
+  },
+  {
+    id: 'cheops-alter',
+    category: 'zeit',
+    tags: ['bauwerke', 'geschichte'],
+    question: 'Wie alt ist die Cheops-Pyramide in Ägypten ungefähr?',
+    correctValue: 4500 * YEAR,
+    unit: '',
+    format: 'duration',
+    range: { mode: 'auto', span: 20 },
+    difficulty: 2,
+    explanation:
+      'Rund 4.500 Jahre. Kleopatra lebte zeitlich näher an der ersten Mondlandung als am Bau der Pyramide.',
+    source: 'Wikipedia: Cheops-Pyramide',
+  },
+  {
+    id: 'groenlandhai-alter',
+    category: 'zeit',
+    tags: ['tiere'],
+    question: 'Wie alt kann ein Grönlandhai werden?',
+    correctValue: 400 * YEAR,
+    unit: '',
+    format: 'duration',
+    range: { mode: 'auto', span: 1000 },
+    difficulty: 5,
+    explanation:
+      'Schätzungen zufolge rund 400 Jahre – das langlebigste bekannte Wirbeltier. Manche lebenden Tiere könnten schon zur Zeit des Dreißigjährigen Kriegs geschwommen sein.',
+    source: 'Nielsen et al., Science (2016)',
   },
 ]
