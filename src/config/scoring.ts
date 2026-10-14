@@ -54,3 +54,16 @@ export const SHOW_AS_FACTOR_FROM = 2
 
 /** Bis zu diesem errorFactor zählt eine Schätzung als „perfekt“ (Statistik). */
 export const PERFECT_MAX_FACTOR = 1.02
+
+export type RatingTone = 'good' | 'ok' | 'bad'
+
+/** Farbe/Stimmung je Bewertung (für Reveal-Effekte). */
+export const RATING_TONE: Record<RatingId, RatingTone> = {
+  perfekt: 'good',
+  'fast-perfekt': 'good',
+  stark: 'good',
+  'gar-nicht-schlecht': 'ok',
+  mutig: 'ok',
+  aua: 'bad',
+  'was-hast-du-gedacht': 'bad',
+}
