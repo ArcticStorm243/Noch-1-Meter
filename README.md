@@ -6,7 +6,7 @@ Kein Quiz, sondern Intuition und überraschende Fakten.
 
 ## Status
 
-Phase 1 (Projekt-Setup) abgeschlossen. Das Spiel selbst ist noch nicht spielbar.
+Spielbar: Startscreen, 10 Runden mit Maßband, Ergebnis-Screen. In Arbeit: Reveal-Animation, Analyse, Statistik.
 
 Das vollständige Konzept steht in [docs/konzept-v2.md](docs/konzept-v2.md).
 
