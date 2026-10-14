@@ -6,7 +6,7 @@ Kein Quiz, sondern Intuition und überraschende Fakten.
 
 ## Status
 
-Konzeptphase. Noch kein Code.
+Phase 1 (Projekt-Setup) abgeschlossen. Das Spiel selbst ist noch nicht spielbar.
 
 Das vollständige Konzept steht in [docs/konzept-v2.md](docs/konzept-v2.md).
 
@@ -16,9 +16,20 @@ React · TypeScript · Vite · Tailwind CSS · Framer Motion · Lucide React · 
 
 Kein Backend, keine Accounts. Der Spielstand liegt im localStorage des Browsers.
 
-## Lokal starten (sobald Code vorhanden ist)
+## Lokal starten
+
+Voraussetzung: Node.js 22 LTS
 
 ```
 npm install
 npm run dev
 ```
+
+## Weitere Befehle
+
+| Befehl | Zweck |
+| --- | --- |
+| `npm run build` | Typecheck + Produktions-Build |
+| `npm run test` | Logik-Tests (Vitest) |
+| `npm run lint` | Lint (oxlint) |
+| `npm run preview` | Build lokal ansehen |
