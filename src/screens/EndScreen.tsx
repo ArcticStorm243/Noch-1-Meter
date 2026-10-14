@@ -15,10 +15,12 @@ type Props = {
   state: GameState
   onRestart: () => void
   onHome: () => void
+  newRecord?: boolean
+  best?: number
 }
 
 /** Ergebnis der Partie mit Analyse und Teilen. */
-export function EndScreen({ state, onRestart, onHome }: Props) {
+export function EndScreen({ state, onRestart, onHome, newRecord = false, best = 0 }: Props) {
   useKey('Enter', onRestart)
   const summary = summarize(state.results)
   const analysis = analyzeBrain(state.results)
@@ -55,6 +57,18 @@ export function EndScreen({ state, onRestart, onHome }: Props) {
           {formatPoints(summary.score)}
         </p>
         <p className="text-muted">von {formatPoints(summary.maxScore)} möglichen Punkten</p>
+        {newRecord ? (
+          <motion.p
+            initial={{ scale: 1.8, opacity: 0, rotate: -4 }}
+            animate={{ scale: 1, opacity: 1, rotate: -2 }}
+            transition={{ type: 'spring', stiffness: 360, damping: 14, delay: 0.3 }}
+            className="mx-auto mt-3 inline-block rounded-xl bg-tape px-4 py-1.5 text-lg font-extrabold text-tape-ink"
+          >
+            Neuer Rekord!
+          </motion.p>
+        ) : (
+          best > 0 && <p className="text-sm text-muted">Dein Rekord: {formatPoints(best)}</p>
+        )}
       </motion.section>
 
       <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">

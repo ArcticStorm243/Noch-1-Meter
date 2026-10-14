@@ -6,7 +6,7 @@ Kein Quiz, sondern Intuition und überraschende Fakten.
 
 ## Status
 
-Spielbar: Startscreen, 10 Runden mit Maßband, dramatischer Reveal, Ergebnis mit Analyse „Dein Gehirn ist komisch“ und Teilen. In Arbeit: Statistik.
+Spielbar und komplett: Startscreen mit Rekord, 10 Runden mit Maßband, dramatischer Reveal, Ergebnis mit Analyse „Dein Gehirn ist komisch“, Teilen und persönliche Statistik (localStorage).
 
 Das vollständige Konzept steht in [docs/konzept-v2.md](docs/konzept-v2.md).
 

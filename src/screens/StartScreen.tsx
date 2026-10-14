@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { BarChart3 } from 'lucide-react'
 import { Button } from '../components/Button'
 import { TapeLogo } from '../components/TapeLogo'
 import { useKey } from '../hooks/useKey'
@@ -6,11 +7,12 @@ import { formatPoints } from '../lib/format'
 
 type Props = {
   onStart: () => void
-  /** Bester Punktestand (kommt in Phase 8 aus dem localStorage). */
+  onStats: () => void
+  /** Bester Punktestand aus dem localStorage. */
   best?: number | null
 }
 
-export function StartScreen({ onStart, best = null }: Props) {
+export function StartScreen({ onStart, onStats, best = null }: Props) {
   useKey('Enter', onStart)
 
   return (
@@ -42,6 +44,14 @@ export function StartScreen({ onStart, best = null }: Props) {
             ? `Dein Rekord: ${formatPoints(best)} Punkte`
             : '10 Runden. Kein Quiz, nur dein Gefühl.'}
         </p>
+        <button
+          type="button"
+          onClick={onStats}
+          className="inline-flex items-center gap-2 py-2 text-sm text-muted underline-offset-4 hover:text-text hover:underline"
+        >
+          <BarChart3 className="size-4" aria-hidden />
+          Deine Statistik
+        </button>
       </footer>
     </main>
   )
