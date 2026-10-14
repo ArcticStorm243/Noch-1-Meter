@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { BarChart3 } from 'lucide-react'
 import { Button } from '../components/Button'
 import { TapeLogo } from '../components/TapeLogo'
+import { QUESTIONS } from '../data/questions'
 import { useKey } from '../hooks/useKey'
 import { formatPoints } from '../lib/format'
 
@@ -22,28 +23,35 @@ export function StartScreen({ onStart, onStats, best = null }: Props) {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, ease: 'easeOut' }}
-          className="flex w-full flex-col items-center gap-6"
+          className="flex w-full flex-col items-center gap-8"
         >
-          <h1 className="text-[clamp(3.25rem,15vw,9rem)] leading-[0.85] font-extrabold tracking-tight">
+          <h1 className="text-[clamp(3.25rem,14vw,8.5rem)] leading-[0.88] font-bold tracking-[-0.04em]">
             NOCH
             <br />1 METER
           </h1>
           <TapeLogo />
-          <p className="max-w-[28ch] text-xl text-muted sm:text-2xl">
+          <p className="max-w-[30ch] text-lg text-muted sm:text-xl">
             Wie gut kannst du Dinge einschätzen?
           </p>
         </motion.div>
       </section>
 
       <footer className="mx-auto flex w-full max-w-md flex-col items-center gap-4 pb-2">
-        <Button onClick={onStart}>
+        <Button onClick={onStart} keyHint="Enter">
           Spiel starten
         </Button>
-        <p className="text-muted">
-          {best !== null && best > 0
-            ? `Dein Rekord: ${formatPoints(best)} Punkte`
-            : '10 Runden. Kein Quiz, nur dein Gefühl.'}
-        </p>
+        <dl className="readout grid w-full grid-cols-2 divide-x divide-border rounded-lg border border-border bg-surface/70 text-center text-sm">
+          <div className="px-3 py-2.5">
+            <dt className="text-xs text-muted">Rekord</dt>
+            <dd className="mt-0.5 font-semibold text-text">
+              {best !== null && best > 0 ? formatPoints(best) : '—'}
+            </dd>
+          </div>
+          <div className="px-3 py-2.5">
+            <dt className="text-xs text-muted">Fragen</dt>
+            <dd className="mt-0.5 font-semibold text-text">{QUESTIONS.length}</dd>
+          </div>
+        </dl>
         <button
           type="button"
           onClick={onStats}

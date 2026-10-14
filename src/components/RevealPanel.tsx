@@ -69,7 +69,7 @@ export function RevealPanel({ result, explanation, quip, step, instant }: Props)
       <motion.p
         initial={instant ? false : stamp.initial}
         animate={stamp.animate}
-        className={`text-[clamp(2.25rem,9vw,4rem)] leading-none font-extrabold tracking-tight ${TONE_TEXT[tone]}`}
+        className={`text-[clamp(2.25rem,9vw,4rem)] leading-none font-bold tracking-[-0.03em] ${TONE_TEXT[tone]}`}
       >
         {title}
       </motion.p>
@@ -78,11 +78,12 @@ export function RevealPanel({ result, explanation, quip, step, instant }: Props)
         initial={instant ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.15 }}
-        className="text-lg text-muted sm:text-xl"
+        className="readout text-base text-muted sm:text-lg"
       >
+        <span className="text-muted/70">Δ </span>
         {deviationText(result)}
-        <span className="mx-2 text-border">/</span>
-        <span className="font-bold text-tape">
+        <span className="mx-3 text-border">|</span>
+        <span className="font-semibold text-tape">
           +<CountUp from={0} to={result.points} format={formatPoints} instant={instant} duration={0.6} />
         </span>
       </motion.p>
@@ -92,10 +93,10 @@ export function RevealPanel({ result, explanation, quip, step, instant }: Props)
           initial={instant ? false : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
-          className="space-y-2"
+          className="mx-auto max-w-[60ch] space-y-3"
         >
-          <p className="text-muted italic">{quip}</p>
-          <p className="mx-auto max-w-[56ch] text-base leading-relaxed sm:text-lg">{explanation}</p>
+          <p className="text-muted">{quip}</p>
+          <p className="border-l-2 border-tape/70 bg-surface/70 py-3 pr-3 pl-4 text-left text-base leading-relaxed backdrop-blur-sm sm:text-lg">{explanation}</p>
         </motion.div>
       )}
     </div>

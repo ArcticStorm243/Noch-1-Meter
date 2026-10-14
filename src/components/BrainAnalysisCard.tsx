@@ -15,8 +15,9 @@ export function BrainAnalysisCard({ analysis, seed }: Props) {
   const balanced = ANALYSIS_TEXTS.balanced[seed % ANALYSIS_TEXTS.balanced.length]
 
   return (
-    <section className="rounded-3xl border border-border bg-surface p-5 sm:p-8" aria-labelledby="brain-title">
-      <h2 id="brain-title" className="text-[clamp(1.75rem,6vw,2.75rem)] leading-tight font-extrabold tracking-tight">
+    <section className="frame rounded-lg border border-border bg-surface/80 p-5 backdrop-blur-sm sm:p-8" aria-labelledby="brain-title">
+      <p className="readout mb-2 text-xs text-muted">Diagnose</p>
+      <h2 id="brain-title" className="text-[clamp(1.75rem,6vw,2.75rem)] leading-tight font-semibold tracking-[-0.02em]">
         {ANALYSIS_TEXTS.title}
       </h2>
 
@@ -27,9 +28,9 @@ export function BrainAnalysisCard({ analysis, seed }: Props) {
           {tendencies.length > 0 && (
             <ul className="mt-5 space-y-3">
               {tendencies.map((t) => (
-                <li key={`${t.group.type}-${t.group.id}`} className="text-lg leading-snug sm:text-2xl">
+                <li key={`${t.group.type}-${t.group.id}`} className="text-lg leading-snug sm:text-xl">
                   {t.direction === 'over' ? ANALYSIS_TEXTS.over : ANALYSIS_TEXTS.under}{' '}
-                  <span className="font-bold text-tape">{groupLabel(t.group)}</span> im Schnitt{' '}
+                  <span className="font-semibold text-tape">{groupLabel(t.group)}</span> im Schnitt{' '}
                   {tendencyAmountText(t.factor)}.
                 </li>
               ))}
@@ -37,15 +38,15 @@ export function BrainAnalysisCard({ analysis, seed }: Props) {
           )}
 
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
-            <div className="rounded-2xl bg-ink/60 p-4">
-              <p className="text-sm text-muted">{ANALYSIS_TEXTS.superpower}</p>
-              <p className={`mt-1 font-extrabold ${superpower ? 'text-2xl text-good' : 'text-lg text-muted'}`}>
+            <div className="rounded-md border border-good/30 bg-good/[0.05] p-4">
+              <p className="readout text-xs text-muted">{ANALYSIS_TEXTS.superpower}</p>
+              <p className={`mt-1 ${superpower ? 'text-2xl font-semibold text-good' : 'text-base text-muted'}`}>
                 {superpower ? groupTitle(superpower.group) : ANALYSIS_TEXTS.noSuperpower}
               </p>
             </div>
-            <div className="rounded-2xl bg-ink/60 p-4">
-              <p className="text-sm text-muted">{ANALYSIS_TEXTS.nemesis}</p>
-              <p className={`mt-1 font-extrabold ${nemesis ? 'text-2xl text-bad' : 'text-lg text-muted'}`}>
+            <div className="rounded-md border border-bad/30 bg-bad/[0.05] p-4">
+              <p className="readout text-xs text-muted">{ANALYSIS_TEXTS.nemesis}</p>
+              <p className={`mt-1 ${nemesis ? 'text-2xl font-semibold text-bad' : 'text-base text-muted'}`}>
                 {nemesis ? groupTitle(nemesis.group) : ANALYSIS_TEXTS.noNemesis}
               </p>
             </div>

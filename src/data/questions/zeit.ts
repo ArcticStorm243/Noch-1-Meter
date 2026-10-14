@@ -69,7 +69,7 @@ export const ZEIT: Question[] = [
     id: 'bolt-100m',
     category: 'zeit',
     tags: ['sport', 'mensch'],
-    question: 'Wie lange brauchte Usain Bolt für seinen 100-m-Weltrekord (2009)?',
+    question: 'Wie lange brauchte Usain Bolt für seinen 100‑m‑Weltrekord (2009)?',
     correctValue: 9.58,
     unit: '',
     format: 'duration',

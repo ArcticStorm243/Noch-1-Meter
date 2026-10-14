@@ -8,26 +8,28 @@ type Props = {
   disabled?: boolean
 }
 
-/** Großer aktueller Wert über dem Maßband, mit −/+ zur Feinjustierung. */
+/** Anzeige wie bei einem digitalen Messschieber, mit −/+ zur Feinjustierung. */
 export function GuessReadout({ text, onStep, disabled = false }: Props) {
   const stepDisabled = disabled || text === null
   return (
-    <div className="flex items-center justify-between gap-3">
+    <div className="frame mx-auto flex w-full max-w-3xl items-stretch gap-2 rounded-lg border border-border bg-surface/80 p-2 backdrop-blur-sm sm:gap-3 sm:p-3">
       <StepButton label="Kleiner" onClick={() => onStep(-1)} disabled={stepDisabled}>
-        <Minus className="size-6" aria-hidden />
+        <Minus className="size-5" aria-hidden />
       </StepButton>
 
-      <div
-        aria-hidden
-        className={`min-w-0 flex-1 text-center text-[clamp(1.75rem,9vw,4.5rem)] leading-none font-extrabold tracking-tight ${
-          text === null ? 'text-muted/50' : 'text-text'
-        }`}
-      >
-        {text ?? '?'}
+      <div aria-hidden className="flex min-w-0 flex-1 flex-col items-center justify-center py-1">
+        <p className="readout text-[11px] text-muted sm:text-xs">Deine Schätzung</p>
+        <p
+          className={`readout mt-1 text-[clamp(1.5rem,7.5vw,4rem)] leading-none font-semibold ${
+            text === null ? 'text-muted/40' : 'text-text'
+          }`}
+        >
+          {text ?? '— — —'}
+        </p>
       </div>
 
       <StepButton label="Größer" onClick={() => onStep(1)} disabled={stepDisabled}>
-        <Plus className="size-6" aria-hidden />
+        <Plus className="size-5" aria-hidden />
       </StepButton>
     </div>
   )
@@ -50,7 +52,7 @@ function StepButton({
       aria-label={label}
       onClick={onClick}
       disabled={disabled}
-      className="grid size-14 shrink-0 place-items-center rounded-full border border-border bg-surface text-text transition-colors hover:bg-surface-2 active:scale-95 disabled:pointer-events-none disabled:opacity-30"
+      className="grid w-12 shrink-0 place-items-center rounded-md border border-border bg-surface-2 text-text transition-colors hover:border-muted active:scale-95 disabled:pointer-events-none disabled:opacity-30 sm:w-14"
     >
       {children}
     </button>

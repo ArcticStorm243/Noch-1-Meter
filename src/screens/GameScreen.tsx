@@ -76,11 +76,14 @@ export function GameScreen({ state, onGuess, onLockIn, onNext }: Props) {
           className="flex flex-1 flex-col justify-center gap-6 py-6 sm:gap-10"
         >
           <div className="space-y-3 text-center">
-            <p className="text-muted">{CATEGORY_LABELS[question.category]}</p>
-            <h1 className="mx-auto max-w-[24ch] text-[clamp(1.6rem,6.5vw,3.25rem)] leading-tight font-bold text-balance">
+            <p className="readout inline-flex items-center gap-2 rounded-[3px] border border-border bg-surface/70 px-2.5 py-1 text-xs text-muted">
+              <span className="size-1.5 rounded-full bg-tape" aria-hidden />
+              {CATEGORY_LABELS[question.category]}
+            </p>
+            <h1 className="mx-auto max-w-[24ch] text-[clamp(1.6rem,6.5vw,3.25rem)] leading-[1.12] font-semibold tracking-[-0.02em] text-balance">
               {question.question}
             </h1>
-            {question.hint && !revealing && <p className="text-muted">Tipp: {question.hint}</p>}
+            {question.hint && !revealing && <p className="text-sm text-muted">Hinweis: {question.hint}</p>}
           </div>
 
           {result ? (
@@ -125,11 +128,11 @@ export function GameScreen({ state, onGuess, onLockIn, onNext }: Props) {
 
       <footer className="pb-2">
         {revealing ? (
-          <Button variant="secondary" onClick={advance}>
+          <Button variant="secondary" onClick={advance} keyHint="Enter">
             {!reveal.done ? 'Überspringen' : isLastRound(state) ? 'Ergebnis ansehen' : 'Nächste Runde'}
           </Button>
         ) : (
-          <Button onClick={onLockIn} disabled={state.guess === null}>
+          <Button onClick={onLockIn} disabled={state.guess === null} keyHint="Enter">
             LOCK IN
           </Button>
         )}
