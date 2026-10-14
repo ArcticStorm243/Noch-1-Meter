@@ -81,3 +81,10 @@ describe('validateQuestions findet Fehler', () => {
     expect(validateQuestions([makeQuestion()]).errors.join('\n')).toContain('für eine Partie nötig')
   })
 })
+
+describe('validateQuestions – ganze Zahlen', () => {
+  it('integer mit Kommazahl als Antwort ist ein Fehler', () => {
+    const errors = validateQuestions([makeQuestion({ integer: true, correctValue: 2.5 })]).errors
+    expect(errors.join('\n')).toContain('ganze Zahl')
+  })
+})

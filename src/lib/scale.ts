@@ -5,6 +5,8 @@ export type Scale = {
   min: number
   max: number
   type: ScaleType
+  /** Nur ganze Zahlen erlaubt (z. B. Anzahl Staaten: 60 ja, 60,3 nein). */
+  integer?: boolean
 }
 
 export type StepSize = 'small' | 'large'
@@ -69,7 +71,12 @@ function significantUnit(value: number, digits = SIGNIFICANT_DIGITS): number {
 
 /** Wert runden und in den Skalenbereich zwingen. */
 export function snapValue(value: number, scale: Scale): number {
-  return clamp(roundSignificant(value), scale.min, scale.max)
+  const rounded = roundSignificant(value)
+  if (scale.integer) {
+    // Erst auf ganze Zahl runden, dann in den (ganzzahligen) Bereich zwingen
+    return clamp(Math.round(rounded), Math.ceil(scale.min), Math.floor(scale.max))
+  }
+  return clamp(rounded, scale.min, scale.max)
 }
 
 /** Wert direkt von einer Position (z. B. Pointer) holen, gerundet. */
@@ -95,7 +102,8 @@ export function stepValue(
 
   let next = snapValue(raw, scale)
   if (next === value && value !== (direction === 1 ? scale.max : scale.min)) {
-    next = snapValue(value + direction * significantUnit(value), scale)
+    const unit = scale.integer ? Math.max(1, significantUnit(value)) : significantUnit(value)
+    next = snapValue(value + direction * unit, scale)
   }
   return next
 }

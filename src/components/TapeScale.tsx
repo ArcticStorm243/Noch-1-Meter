@@ -118,10 +118,10 @@ export function TapeScale({
         next = stepValue(start, scale, -1, 'large')
         break
       case 'Home':
-        next = scale.min
+        next = snapValue(scale.min, scale)
         break
       case 'End':
-        next = scale.max
+        next = snapValue(scale.max, scale)
         break
       default:
         return

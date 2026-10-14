@@ -90,6 +90,10 @@ export function validateQuestions(questions: readonly Question[]): ValidationRes
     }
 
     if (q.comparison && !(q.comparison.value > 0)) err('comparison.value muss > 0 sein')
+    if (q.integer && !Number.isInteger(q.correctValue)) {
+      err('integer: correctValue muss eine ganze Zahl sein')
+    }
+    if (q.integer && format !== 'number') err('integer geht nur mit format "number"')
   }
 
   // Statistik

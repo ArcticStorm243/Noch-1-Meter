@@ -163,3 +163,31 @@ describe('logTicks', () => {
     expect(logTicks({ min: 0.5, max: 200, type: 'log' })).toEqual([1, 10, 100])
   })
 })
+
+describe('ganzzahlige Skala', () => {
+  const ints: Scale = { min: 10, max: 500, type: 'log', integer: true }
+
+  it('rundet auf ganze Zahlen (60 ja, 60,3 nein)', () => {
+    expect(snapValue(60.3, ints)).toBe(60)
+    expect(snapValue(60.7, ints)).toBe(61)
+    for (let p = 0; p <= 1; p += 0.01) {
+      expect(Number.isInteger(valueAtPosition(p, ints))).toBe(true)
+    }
+  })
+
+  it('Feinjustierung bleibt ganzzahlig und kommt immer weiter', () => {
+    let v = 10
+    for (let i = 0; i < 30; i++) {
+      const next = stepValue(v, ints, 1)
+      expect(Number.isInteger(next)).toBe(true)
+      expect(next).toBeGreaterThan(v)
+      v = next
+    }
+  })
+
+  it('kleine Bereiche: jeder Schritt mindestens 1', () => {
+    const small: Scale = { min: 1, max: 20, type: 'linear', integer: true }
+    expect(stepValue(5, small, 1)).toBe(6)
+    expect(stepValue(5, small, -1)).toBe(4)
+  })
+})
