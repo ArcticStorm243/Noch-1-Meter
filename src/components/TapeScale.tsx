@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react'
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react'
 import { useElementWidth } from '../hooks/useElementWidth'
 import { labelSpacing, pickAxisLabels } from '../lib/axisLabels'
 import {
@@ -27,7 +27,15 @@ type Props = {
   /** Beim Reveal: richtige Antwort als zweiter Marker. */
   answer?: number | null
   answerLabel?: string
+  /** Beim Reveal: Abstand zwischen Schätzung und Antwort farbig markieren. */
+  gapTone?: 'good' | 'ok' | 'bad' | null
 }
+
+const GAP_COLOR = {
+  good: 'bg-good/45',
+  ok: 'bg-ok/45',
+  bad: 'bg-bad/45',
+} as const
 
 const SPRING = { type: 'spring', stiffness: 500, damping: 40 } as const
 const INSTANT = { duration: 0 } as const
@@ -46,8 +54,15 @@ export function TapeScale({
   disabled = false,
   answer = null,
   answerLabel = 'Tatsächlich',
+  gapTone = null,
 }: Props) {
   const tapeRef = useRef<HTMLDivElement>(null)
+  const sliderRef = useRef<HTMLDivElement>(null)
+
+  // Nach LOCK IN den Fokus abgeben – sonst bleibt der Fokusrahmen beim Reveal stehen.
+  useEffect(() => {
+    if (disabled && document.activeElement === sliderRef.current) sliderRef.current?.blur()
+  }, [disabled])
   const [dragging, setDragging] = useState(false)
 
   const tapeWidth = useElementWidth(tapeRef)
@@ -118,6 +133,7 @@ export function TapeScale({
   return (
     <div className="w-full select-none">
       <div
+        ref={sliderRef}
         role="slider"
         tabIndex={disabled ? -1 : 0}
         aria-label={label}
@@ -169,6 +185,22 @@ export function TapeScale({
             ))}
             <span className="absolute right-2">{formatAxis(scale.max)}</span>
           </div>
+
+          {/* Abstand Schätzung ↔ Antwort (Reveal) */}
+          {gapTone && answerPos !== null && valuePos !== null && (
+            <motion.div
+              className={`pointer-events-none absolute inset-y-0 ${GAP_COLOR[gapTone]}`}
+              style={{
+                left: `${Math.min(valuePos, answerPos) * 100}%`,
+                width: `${Math.abs(valuePos - answerPos) * 100}%`,
+                transformOrigin: valuePos < answerPos ? 'left' : 'right',
+              }}
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.45, ease: 'easeOut' }}
+              aria-hidden
+            />
+          )}
 
           {/* Richtige Antwort (Reveal) */}
           {answerPos !== null && (
