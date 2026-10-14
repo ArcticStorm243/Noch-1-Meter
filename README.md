@@ -35,6 +35,15 @@ npm run dev
 | `npm run lint` | Lint (oxlint) |
 | `npm run preview` | Build lokal ansehen |
 
+## Hosting (GitHub Pages)
+
+Jeder Push auf `main` baut das Spiel und veröffentlicht es automatisch:
+**https://arcticstorm243.github.io/Noch-1-Meter/**
+
+Einmalig nötig: *Settings → Pages → Build and deployment → Source:* **GitHub Actions**.
+
+Pull Requests werden automatisch geprüft (Lint, Fragen, Tests, Build).
+
 ## Neue Fragen hinzufügen
 
 1. Passende Datei in `src/data/questions/` öffnen (eine Datei pro Kategorie).

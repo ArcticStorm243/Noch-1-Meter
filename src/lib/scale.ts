@@ -118,6 +118,59 @@ export function niceCeil(value: number): number {
   return Number((nice * magnitude).toPrecision(12))
 }
 
+export type Tick = {
+  value: number
+  position: number
+  /** Große Markierung mit Beschriftung. */
+  major: boolean
+}
+
+/** Schrittweite aus der Reihe 1, 2, 5 × 10^n, so dass ca. `target` Schritte entstehen. */
+function niceStep(range: number, target: number): number {
+  const raw = range / target
+  const magnitude = 10 ** Math.floor(Math.log10(raw))
+  const n = raw / magnitude
+  const nice = n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10
+  return nice * magnitude
+}
+
+/**
+ * Markierungen für das Maßband. Ehrlich zur Skala:
+ * linear = gleichmäßige Abstände, log = 1–9 je Zehnerpotenz.
+ */
+export function scaleTicks(scale: Scale): Tick[] {
+  const ticks: Tick[] = []
+  const push = (value: number, major: boolean) => {
+    if (value < scale.min * (1 - 1e-9) || value > scale.max * (1 + 1e-9)) return
+    ticks.push({ value, position: valueToPosition(value, scale), major })
+  }
+
+  if (scale.type === 'log') {
+    const start = Math.floor(Math.log10(scale.min))
+    const end = Math.ceil(Math.log10(scale.max))
+    const decades = end - start
+    for (let e = start; e <= end; e++) {
+      const base = 10 ** e
+      for (let m = 1; m <= 9; m++) {
+        // Bei sehr vielen Zehnerpotenzen nur 1, 2, 5 zeigen, sonst wird es zu dicht.
+        if (decades > 5 && ![1, 2, 5].includes(m)) continue
+        push(Number((m * base).toPrecision(12)), m === 1)
+      }
+    }
+    return ticks
+  }
+
+  const major = niceStep(scale.max - scale.min, 5)
+  const minor = major / 5
+  const first = Math.ceil(scale.min / minor - 1e-9) * minor
+  for (let v = first; v <= scale.max + minor * 1e-6; v += minor) {
+    const value = Number(v.toPrecision(12))
+    const isMajor = Math.abs(value / major - Math.round(value / major)) < 1e-6
+    push(value, isMajor)
+  }
+  return ticks
+}
+
 /** Markierungen für eine Log-Skala: Zehnerpotenzen innerhalb des Bereichs. */
 export function logTicks(scale: Scale): number[] {
   const ticks: number[] = []
