@@ -1,11 +1,15 @@
 import { motion } from 'framer-motion'
+import { BrainAnalysisCard } from '../components/BrainAnalysisCard'
 import { Button } from '../components/Button'
+import { ShareButton } from '../components/ShareButton'
 import { CATEGORY_LABELS } from '../data/labels'
+import { analyzeBrain } from '../game/analysis'
 import { summarize } from '../game/summary'
 import type { GameState } from '../game/types'
 import { useKey } from '../hooks/useKey'
 import { averageDeviationText, deviationText } from '../lib/deviationText'
 import { formatPoints, formatValue } from '../lib/format'
+import { buildShareText } from '../lib/share'
 
 type Props = {
   state: GameState
@@ -13,10 +17,17 @@ type Props = {
   onHome: () => void
 }
 
-/** Ergebnis der Partie. Analyse „Dein Gehirn ist komisch“ folgt in Phase 7. */
+/** Ergebnis der Partie mit Analyse und Teilen. */
 export function EndScreen({ state, onRestart, onHome }: Props) {
   useKey('Enter', onRestart)
   const summary = summarize(state.results)
+  const analysis = analyzeBrain(state.results)
+  const shareText = buildShareText({
+    score: summary.score,
+    ratings: state.results.map((r) => r.rating),
+    averageFactor: summary.averageFactor,
+    url: typeof window === 'undefined' ? undefined : window.location.origin + window.location.pathname,
+  })
 
   const stats = [
     { label: 'Durchschnittlich daneben', value: averageDeviationText(summary.averageFactor) },
@@ -55,6 +66,8 @@ export function EndScreen({ state, onRestart, onHome }: Props) {
         ))}
       </section>
 
+      <BrainAnalysisCard analysis={analysis} seed={state.seed} />
+
       <section className="space-y-3">
         <h2 className="text-lg font-bold">Deine Runden</h2>
         <ol className="space-y-2">
@@ -79,9 +92,14 @@ export function EndScreen({ state, onRestart, onHome }: Props) {
 
       <footer className="mx-auto flex w-full max-w-md flex-col gap-3 pb-2">
         <Button onClick={onRestart}>Nochmal spielen</Button>
-        <Button variant="ghost" onClick={onHome}>
+        <ShareButton text={shareText} />
+        <button
+          type="button"
+          onClick={onHome}
+          className="py-2 text-muted underline-offset-4 hover:text-text hover:underline"
+        >
           Zum Start
-        </Button>
+        </button>
       </footer>
     </main>
   )

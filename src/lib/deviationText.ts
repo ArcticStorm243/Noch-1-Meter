@@ -14,3 +14,9 @@ export function averageDeviationText(averageFactor: number): string {
   if (averageFactor >= 2) return formatFactor(averageFactor)
   return formatPercent((averageFactor - 1) * 100)
 }
+
+/** Für Sätze: „um 27 %“ oder „um das 3,4-Fache“. */
+export function tendencyAmountText(factor: number): string {
+  if (factor >= 2) return `um das ${formatFactor(factor).replace('×', '')}-Fache`
+  return `um ${Math.round((factor - 1) * 100)}\u00a0%`
+}
