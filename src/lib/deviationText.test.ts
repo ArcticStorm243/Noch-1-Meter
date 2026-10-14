@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { averageDeviationText, deviationText } from './deviationText'
+import { averageDeviationText, deviationText, tendencyAmountText } from './deviationText'
 import { computeError } from './scoring'
 
 const s = (t: string) => t.replaceAll(' ', ' ')
@@ -18,5 +18,12 @@ describe('averageDeviationText', () => {
   it('Prozent unter Faktor 2, sonst Faktor', () => {
     expect(s(averageDeviationText(1.084))).toBe('8,4 %')
     expect(s(averageDeviationText(2.31))).toBe('2,3×')
+  })
+})
+
+describe('tendencyAmountText', () => {
+  it('Prozent oder Vielfaches', () => {
+    expect(s(tendencyAmountText(1.27))).toBe('um 27 %')
+    expect(s(tendencyAmountText(3.44))).toBe('um das 3,4-Fache')
   })
 })
